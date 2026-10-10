@@ -1,0 +1,180 @@
+/* ----- Barre du haut ----- */
+.plan-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.plan-toolbar h2 { margin: 0; }
+.plan-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ----- Légende ----- */
+.plan-legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--vert-clair);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+.chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* ----- Grille ----- */
+.plan-scroll {
+  overflow-x: auto;
+  border: 1px solid rgba(23, 63, 50, 0.3);
+  border-radius: 14px;
+  background: white;
+}
+.plan-grid { min-width: 920px; }
+
+.plan-head, .plan-body {
+  display: grid;
+  grid-template-columns: 78px repeat(7, minmax(120px, 1fr));
+}
+
+.plan-head {
+  background: var(--vert-fonce);
+  color: var(--vert-clair);
+}
+.day-head {
+  padding: 12px 4px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.day-head.today { background: #2a6a53; }
+
+.time-col { background: var(--vert-clair); }
+.hour-label {
+  height: var(--hour);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--vert-fonce);
+  border-bottom: 1px solid rgba(23, 63, 50, 0.14);
+}
+
+.day-col {
+  position: relative;
+  border-left: 1px solid rgba(23, 63, 50, 0.14);
+  cursor: pointer;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0, transparent calc(var(--hour) - 1px),
+    rgba(23, 63, 50, 0.14) calc(var(--hour) - 1px), rgba(23, 63, 50, 0.14) var(--hour)
+  );
+}
+.day-col.today { background-color: rgba(220, 232, 226, 0.35); }
+.day-col:hover { background-color: rgba(220, 232, 226, 0.3); }
+
+/* Zones hors horaires (hachurées) */
+.zone-off {
+  position: absolute; left: 0; right: 0;
+  background: repeating-linear-gradient(45deg, rgba(23, 63, 50, 0.08) 0 6px, rgba(23, 63, 50, 0.02) 6px 12px);
+  cursor: not-allowed;
+  z-index: 1;
+}
+
+/* ----- Blocs (heures successives fusionnées) ----- */
+.block {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  padding: 4px;
+  overflow: hidden;
+  color: white;
+  font-size: 0.85rem;
+  line-height: 1.25;
+  box-shadow: inset 0 0 0 2px #fff;
+  cursor: pointer;
+  transition: filter 0.12s;
+}
+.block:hover { filter: brightness(1.1); }
+
+.block.full { left: 0; width: 100%; }
+.block.A { left: 0; width: 50%; font-size: 0.74rem; }
+.block.B { left: 50%; width: 50%; font-size: 0.74rem; }
+
+.block strong { word-break: break-word; }
+.block small { font-size: 0.72rem; font-weight: 500; opacity: 0.92; }
+
+.badge {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+/* ----- Choix de catégorie, de jours, de semaine (fenêtre d'une case) ----- */
+.field-label { margin-bottom: 6px; }
+
+.cat-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.cat-btn {
+  border: 2px solid var(--c); color: var(--c); background: white;
+  padding: 6px 12px; border-radius: 999px; cursor: pointer;
+  font-weight: 600; font-size: 0.85rem;
+}
+.cat-btn.selected { background: var(--c); color: white; }
+
+.day-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.day-btn {
+  border: 2px solid var(--vert-fonce); background: white; color: var(--vert-fonce);
+  border-radius: 8px; padding: 5px 10px;
+  font-weight: 600; font-size: 0.82rem; cursor: pointer;
+}
+.day-btn.selected { background: var(--vert-fonce); color: var(--vert-clair); }
+.day-btn.quick { border-style: dashed; }
+
+.modal-card select {
+  display: block; width: 100%; margin-top: 4px;
+  padding: 9px 10px; border: 1.5px solid #b9cdc3; border-radius: 8px;
+  font-size: 1rem; color: var(--vert-fonce); background: white;
+}
+
+/* ----- Tableau des horaires ----- */
+.settings-table { width: 100%; border-collapse: collapse; }
+.settings-table th { font-size: 0.8rem; text-align: left; opacity: 0.7; padding: 6px; }
+.settings-table td { padding: 6px; border-top: 1px solid var(--vert-clair); }
+.settings-table td:first-child { font-weight: 600; }
+.settings-table select {
+  width: 100%; padding: 6px; border: 1.5px solid #b9cdc3; border-radius: 8px;
+  font-size: 0.95rem; color: var(--vert-fonce); background: white;
+}
+/* ----- Mode semaine A / semaine B (fenêtre d'une case) ----- */
+.ab-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ab-panel {
+  border: 1.5px solid #b9cdc3;
+  border-radius: 12px;
+  padding: 12px;
+}
+.ab-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ab-badge { background: var(--vert-fonce); color: var(--vert-clair); }
+.ab-panel .cat-picker { flex-direction: column; align-items: stretch; margin-bottom: 10px; }
+.ab-panel .cat-btn { border-radius: 10px; text-align: left; }
+
+@media (max-width: 560px) {
+  .ab-panels { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>a9raa</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/timer.css">
+  <link rel="stylesheet" href="css/planning.css">
+</head>
+<body>
+  <header>
+    <h1>📚 a9raa</h1>
+    <nav>
+      <button data-page="accueil" class="active">Accueil</button>
+      <button data-page="planning">Planning</button>
+      <button data-page="classement">Classement</button>
+      <button data-page="groupes">Groupes</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ACCUEIL : chronomètre -->
+    <section id="accueil" class="page active">
+      <h2>Ma session d'étude</h2>
+
+      <div class="timer-card">
+        <div id="timer-display">00:00:00</div>
+        <input type="text" id="subject" placeholder="Matière (ex : Maths)">
+        <div class="timer-buttons">
+          <button id="btn-start">▶ Démarrer</button>
+          <button id="btn-pause">⏸ Pause</button>
+          <button id="btn-stop">⏹ Terminer et enregistrer</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span id="stat-today">0h 00min</span><small>Aujourd'hui</small></div>
+        <div class="stat"><span id="stat-week">0h 00min</span><small>Cette semaine</small></div>
+        <div class="stat"><span id="stat-total">0h 00min</span><small>Total</small></div>
+      </div>
+
+      <h3>Dernières sessions</h3>
+      <ul id="sessions-list"></ul>
+    </section>
+
+    <!-- PLANNING : tableau à remplir -->
+    <section id="planning" class="page">
+      <div class="plan-toolbar">
+        <h2>Mon emploi du temps</h2>
+        <div class="plan-actions">
+          <button id="plan-settings" class="btn-ghost">⚙ Horaires</button>
+          <button id="plan-clear" class="btn-ghost">🗑 Tout vider</button>
+        </div>
+      </div>
+
+      <p class="hint">Appuie sur une case pour la remplir. Si la semaine A et la semaine B sont différentes, la case se divise en deux : A à gauche, B à droite.</p>
+
+      <div id="plan-legend" class="plan-legend"></div>
+
+      <div class="plan-scroll">
+        <div id="plan-grid" class="plan-grid"></div>
+      </div>
+    </section>
+
+    <!-- CLASSEMENT (à venir) -->
+    <section id="classement" class="page">
+      <h2>Classement</h2>
+      <p>Bientôt : qui a le plus étudié ?</p>
+    </section>
+
+    <!-- GROUPES (à venir) -->
+    <section id="groupes" class="page">
+      <h2>Binômes et groupes</h2>
+      <p>Bientôt : étudier ensemble.</p>
+    </section>
+  </main>
+
+  <!-- Fenêtre : remplir une case -->
+  <div id="modal-cell" class="modal" hidden>
+    <div class="modal-card wide">
+      <h3 id="cell-title">Lundi · 8h</h3>
+
+      <div class="field-label">Quand ?</div>
+      <div id="mode-picker" class="day-picker"></div>
+
+      <!-- Mode : pareil chaque semaine -->
+      <div id="panel-same">
+        <div class="field-label">Quoi ?</div>
+        <div id="cat-picker-same" class="cat-picker"></div>
+        <label>Texte (facultatif)
+          <input type="text" id="text-same" placeholder="Ex : Maths, Football...">
+        </label>
+      </div>
+
+      <!-- Mode : semaine A différente de la semaine B -->
+      <div id="panel-diff" class="ab-panels">
+        <div class="ab-panel">
+          <div class="ab-title">Semaine A <span class="badge ab-badge">A</span></div>
+          <div id="cat-picker-A" class="cat-picker"></div>
+          <input type="text" id="text-A" placeholder="Texte (facultatif)">
+        </div>
+        <div class="ab-panel">
+          <div class="ab-title">Semaine B <span class="badge ab-badge">B</span></div>
+          <div id="cat-picker-B" class="cat-picker"></div>
+          <input type="text" id="text-B" placeholder="Texte (facultatif)">
+        </div>
+      </div>
+
+      <label>Jusqu'à
+        <select id="cell-until"></select>
+      </label>
+
+      <div class="field-label">Appliquer aux jours</div>
+      <div id="day-picker" class="day-picker"></div>
+
+      <p id="cell-error" class="form-error"></p>
+
+      <div class="modal-actions">
+        <button id="cell-clear" class="btn-danger" type="button">Vider ces cases</button>
+        <span class="spacer"></span>
+        <button id="cell-cancel" class="btn-ghost" type="button">Annuler</button>
+        <button id="cell-save" class="btn-primary" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fenêtre : horaires de chaque jour -->
+  <div id="modal-settings" class="modal" hidden>
+    <div class="modal-card">
+      <h3>Horaires de chaque jour</h3>
+      <p class="hint">Choisis de quelle heure à quelle heure tu veux planifier chaque jour.</p>
+
+      <table class="settings-table">
+        <thead>
+          <tr><th>Jour</th><th>De</th><th>À</th></tr>
+        </thead>
+        <tbody id="settings-body"></tbody>
+      </table>
+
+      <button id="set-copy" class="btn-ghost small" type="button">Appliquer l'horaire du lundi à tous les jours</button>
+
+      <p id="set-error" class="form-error"></p>
+
+      <div class="modal-actions">
+        <span class="spacer"></span>
+        <button id="set-cancel" class="btn-ghost" type="button">Annuler</button>
+        <button id="set-save" class="btn-primary" type="button">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navigation.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/planning.js"></script>
+</body>
+</html>

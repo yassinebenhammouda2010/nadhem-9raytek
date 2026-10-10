@@ -1,0 +1,62 @@
+/* ----- Chronomètre ----- */
+.timer-card {
+  background: var(--vert-fonce);
+  color: var(--vert-clair);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+#timer-display {
+  font-size: 3.5rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 16px;
+}
+
+#subject {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.timer-buttons { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+.timer-buttons button {
+  background: var(--vert-clair);
+  color: var(--vert-fonce);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+.timer-buttons button:hover { opacity: 0.85; }
+
+/* ----- Statistiques ----- */
+.stats { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+
+.stat {
+  flex: 1;
+  min-width: 120px;
+  background: var(--vert-clair);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.stat span { display: block; font-size: 1.4rem; font-weight: bold; }
+.stat small { opacity: 0.75; }
+
+/* ----- Liste des sessions ----- */
+#sessions-list { list-style: none; }
+#sessions-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--vert-clair);
+  display: flex;
+  justify-content: space-between;
+}
